@@ -4,13 +4,13 @@ Sito per il Babbo Natale segreto dei dipendenti TeleBoario (max ~30 persone). Si
 
 ## Regole di lavoro
 - Soluzione piu semplice, niente over-engineering, risposte brevi.
-- Stile, font (Amore Christmas, fallback Caveat Brush + Fredoka), palette, animazioni ed elfo restano quelli di 24 Elf Games.
+- Grafica = ultima versione di 24 Elf Games (repo federicaikas/24ElfGames, main): tema maglione, palette verde pino/oro/rosa, font display Xmas Sweater/Snowinter/Amore Christmas, Inter per i testi, personaggi Freepik, lucine, barra in basso. Tutto in `app/globals.css` (contiene anche classi dei vecchi giochi, inutilizzate).
 
 ## Stack
 Next.js (App Router, TypeScript) su Vercel + Supabase (progetto "tb-secret-santa", ref ieanonobnoyxgqkwruhv). Variabili in `.env.example` (copiate in `.env.local`).
 
 ## Flusso
-- Registrazione: solo nome + password (min 6). Nessuna email vera: `emailFor(nome)` in `lib/supabase.ts` crea un indirizzo interno `@tbsanta.app`. Avatar elfo assegnato a caso (modificabile da Profilo). Richiede "Confirm email" DISATTIVATO in Supabase > Authentication > Providers > Email.
+- Registrazione: solo nome + password (min 6). Nessuna email vera: `emailFor(nome)` in `lib/supabase.ts` crea un indirizzo interno `@tbsanta.app`. Personaggio assegnato a caso (modificabile da Profilo). Richiede "Confirm email" DISATTIVATO in Supabase > Authentication > Providers > Email.
 - Home: regole (budget e frase "quando si scambiano" editabili da admin), elenco partecipanti.
 - Pescata (`/pescata`): gratta e vinci col nome da regalare, visibile dopo l'abbinamento.
 - Admin: avvia/rifai abbinamento, testi, rinomina, blocca, reset password (genera una password nuova e la mostra).

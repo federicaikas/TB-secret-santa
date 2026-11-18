@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/Loader";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase, type Profile } from "@/lib/supabase";
@@ -36,7 +37,7 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
   if (failed)
     return (
       <main className="page">
-        <div className="card stack">
+        <div className="stack" style={{ textAlign: "center" }}>
           <p>Non trovo il tuo profilo: forse la slitta è senza segnale. Controlla la connessione e riprova!</p>
           <button className="btn" onClick={() => { setFailed(false); load(); }}>Riprova</button>
           <button className="btn secondary" onClick={() => supabase.auth.signOut()}>Esci</button>
@@ -44,12 +45,12 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
       </main>
     );
 
-  if (!profile) return <main className="page"><p>Gli elfi ci stanno lavorando...</p></main>;
+  if (!profile) return <main className="page"><Loader /></main>;
 
   if (profile.blocked)
     return (
       <main className="page">
-        <div className="card">
+        <div className="stack" style={{ textAlign: "center" }}>
           <p>Il tuo account è in pausa: sei finito nella lista dei birichini. Scrivi all&apos;organizzatrice!</p>
           <button className="btn" onClick={() => supabase.auth.signOut()}>Esci</button>
         </div>
@@ -63,7 +64,7 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
 
   return (
     <ProfileCtx.Provider value={{ profile, reload: load }}>
-      {!profile.tutorial_seen && <Tutorial onClose={closeTutorial} />}
+      {!profile.tutorial_seen && <Tutorial onClose={closeTutorial} admin={profile.is_admin} />}
       <main className="page">{children}</main>
       <Nav />
     </ProfileCtx.Provider>

@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/Loader";
 import { useEffect, useState } from "react";
 import AuthGate from "@/components/AuthGate";
 import Biglietto from "@/components/Biglietto";
@@ -22,7 +23,7 @@ function Pescata() {
     });
   }, []);
 
-  if (mine === undefined) return <p>Gli elfi ci stanno lavorando...</p>;
+  if (mine === undefined) return <Loader />;
 
   if (!mine)
     return (

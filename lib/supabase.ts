@@ -5,12 +5,16 @@ export const supabase = createBrowserClient(
   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
 );
 
+export type Creature = "elfo_f" | "elfo_m" | "pinguino" | "volpe" | "orso" | "schiaccianoci";
+
 export type Avatar = {
+  creature?: Creature; // assente = elfo/elfa in base a sex (avatar vecchi)
   sex: "f" | "m";
-  hair: number; // 0-4
+  color?: string; // colore degli accessori (cappello, sciarpa): uno dei colori brand; assente = originale
+  hair: number; // non piu usato (compatibilita)
   hairColor: string;
-  face: number; // 0-2
-  hat: number; // 0-2
+  face: number; // espressione 0-3
+  hat: number; // non piu usato (compatibilita)
 };
 
 export type Profile = {

@@ -8,7 +8,7 @@ export default function Biglietto({ nickname, avatar, budget, event }: { nicknam
       <span className="star4" />
       <h2>Il tuo regalo va a...</h2>
       <Elf avatar={avatar} size={110} />
-      <p className="title" style={{ fontSize: "2rem", margin: 0 }}>{nickname}</p>
+      <p className="title" style={{ fontSize: "2.4rem", margin: 0, overflowWrap: "anywhere" }}>{nickname}</p>
       <p style={{ margin: 0 }}>Un regalino con budget massimo di <b>{budget}</b>, in un pacchetto anonimo.</p>
       <p style={{ margin: 0 }}>🤫 Bocca cucita fino allo scambio: {event}</p>
       <span className="star4" />

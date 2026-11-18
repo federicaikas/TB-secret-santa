@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/Loader";
 import { useEffect, useState } from "react";
 import AuthGate, { useProfile } from "@/components/AuthGate";
 import { supabase } from "@/lib/supabase";
@@ -10,7 +11,7 @@ const KEYS = ["budget", "event_text"] as const;
 
 function Admin() {
   const { profile } = useProfile();
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[] | null>(null);
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [done, setDone] = useState(false);
   const [msg, setMsg] = useState("");
@@ -27,6 +28,7 @@ function Admin() {
   useEffect(() => { if (profile.is_admin) load(); }, []);
 
   if (!profile.is_admin) return <p>Pagina riservata all&apos;organizzatrice.</p>;
+  if (!users) return <Loader />;
 
   async function saveSetting(key: string, value: string) {
     const { error } = await supabase.rpc("admin_set_setting", { p_key: key, p_value: value });
@@ -51,7 +53,7 @@ function Admin() {
   async function runMatching() {
     const ok = confirm(done
       ? "Gli abbinamenti ci sono già: rifarli CANCELLA i vecchi e tutti avranno un nuovo abbinato. Continuare?"
-      : `Avviare l'abbinamento per ${users.filter((u) => !u.blocked).length} partecipanti? Da quel momento le iscrizioni si chiudono.`);
+      : `Avviare l'abbinamento per ${users!.filter((u) => !u.blocked).length} partecipanti? Da quel momento le iscrizioni si chiudono.`);
     if (!ok) return;
     const { data, error } = await supabase.rpc("admin_run_matching");
     setMsg(error ? `Errore: ${error.message}` : `Fatto! ${data} persone abbinate. Ognuno può grattare il suo biglietto.`);
